@@ -125,6 +125,10 @@ import { Component, OnInit } from "@angular/core";
       <hr />
       <h3>Bài tập: Directive quản lý sản phẩm</h3>
       <app-bai-tap-directive></app-bai-tap-directive>
+
+      <hr />
+      <h3>Bài tập: Directive 5 Login Form</h3>
+      <app-bai-tap-5></app-bai-tap-5>
     </div>
   `,
 })
