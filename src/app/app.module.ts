@@ -4,6 +4,7 @@ import { BrowserModule } from "@angular/platform-browser";
 import { AppComponent } from "./app.component";
 import { DemoComponent } from "./demo/demo.component";
 import { NavbarComponent } from "./navbar/navbar.component";
+import { PropsModule } from "./Props/Props.module";
 import { AngularDirectiveModule } from "./TrainingAngulars/AngularDirective/AngularDirective.module";
 import { BaiTap1Module } from "./TrainingAngulars/BaiTap1/bai-tap1.module";
 import { DataBindingModule } from "./TrainingAngulars/DataBinding/data-binding.module";
@@ -20,6 +21,7 @@ import { DataBindingModule } from "./TrainingAngulars/DataBinding/data-binding.m
     BaiTap1Module,
     DataBindingModule,
     AngularDirectiveModule,
+    PropsModule,
   ],
   providers: [], // Chức những class service
   bootstrap: [AppComponent], // chứa các component được chạy trên file index.html
