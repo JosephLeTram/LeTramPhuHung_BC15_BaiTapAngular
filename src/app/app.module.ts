@@ -8,6 +8,8 @@ import { PropsModule } from "./Props/Props.module";
 import { AngularDirectiveModule } from "./TrainingAngulars/AngularDirective/AngularDirective.module";
 import { BaiTap1Module } from "./TrainingAngulars/BaiTap1/bai-tap1.module";
 import { DataBindingModule } from "./TrainingAngulars/DataBinding/data-binding.module";
+import { NoopAnimationsModule } from "@angular/platform-browser/animations";
+import { DemoUIModule } from "./DemoUIModule/DemoUIModule.module";
 
 @NgModule({
   declarations: [
@@ -22,6 +24,8 @@ import { DataBindingModule } from "./TrainingAngulars/DataBinding/data-binding.m
     DataBindingModule,
     AngularDirectiveModule,
     PropsModule,
+    NoopAnimationsModule,
+    DemoUIModule,
   ],
   providers: [], // Chức những class service
   bootstrap: [AppComponent], // chứa các component được chạy trên file index.html

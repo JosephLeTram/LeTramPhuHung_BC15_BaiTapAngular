@@ -1,8 +1,13 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input, Output, EventEmitter, OnInit } from "@angular/core";
 
 @Component({
   selector: "app-ghe",
-  template: `<button [ngClass]="{ gheDaDat: ghe.TrangThai }" class="ghe">
+  template: `<button
+      [disabled]="ghe.TrangThai"
+      [ngClass]="{ gheDaDat: ghe.TrangThai, gheDangDat: dangDat }"
+      class="ghe"
+      (click)="datGhe()"
+    >
       {{ ghe.SoGhe }}
     </button>
 
@@ -24,14 +29,26 @@ import { Component, Input, OnInit } from "@angular/core";
         background-color: red;
         cursor: no-drop;
       }
+
+      .gheDangDat {
+        background-color: green !important;
+      }
     `,
   ],
 })
 export class GheComponent implements OnInit {
   @Input() ghe: Ghe = new Ghe();
+  @Output() clickDatGhe = new EventEmitter();
+
+  dangDat: boolean = false;
   constructor() {}
 
   ngOnInit() {}
+
+  datGhe() {
+    this.dangDat = !this.dangDat;
+    this.clickDatGhe.emit(this.ghe);
+  }
 }
 
 class Ghe {

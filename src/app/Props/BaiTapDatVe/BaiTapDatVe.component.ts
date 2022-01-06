@@ -1,4 +1,6 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChildren, QueryList } from "@angular/core";
+import * as _ from "lodash";
+import { GheComponent } from "./Ghe.component";
 
 @Component({
   selector: "app-dat-ve",
@@ -10,16 +12,29 @@ import { Component, OnInit } from "@angular/core";
         <app-ghe
           *ngFor="let ghe of mangGhe; let i = index"
           [ghe]="ghe"
+          (clickDatGhe)="datGhe($event)"
         ></app-ghe>
 
         <br *ngIf="(i + 1) % 4 === 0" />
+      </div>
+      <div class="col-6">
+        <h3>Danh sách ghế đã đặt</h3>
+        <p *ngFor="let gheDangDat of mangGheDangChon">
+          Ghế Số: {{ gheDangDat.SoGhe }}
+          <span
+            class="text-danger"
+            style="cursor:pointer"
+            (click)="huyGhe(gheDangDat)"
+            >[Hủy]</span
+          >
+        </p>
       </div>
     </div>
   </div>`,
 })
 export class BaiTapDatVeComponent implements OnInit {
   i: number = 0;
-  mangGhe: any[] = [
+  mangGhe: Ghe[] = [
     { SoGhe: 1, TenGhe: "số 1", Gia: 100, TrangThai: false },
     { SoGhe: 2, TenGhe: "số 2", Gia: 100, TrangThai: false },
     { SoGhe: 3, TenGhe: "số 3", Gia: 100, TrangThai: false },
@@ -57,7 +72,58 @@ export class BaiTapDatVeComponent implements OnInit {
     { SoGhe: 35, TenGhe: "số 35", Gia: 100, TrangThai: false },
     { SoGhe: 36, TenGhe: "số 36", Gia: 100, TrangThai: true },
   ];
+
+  mangGheDangChon: Ghe[] = [];
+
+  datGhe(gheDangDat: Ghe) {
+    // Kiếm tra khi click vào có dữ liệu ghế trong mảng đang đặt thì xóa đi, nếu chưa có thì thêm vào
+    let index = this.mangGheDangChon.findIndex(
+      (gheDD) => gheDD.SoGhe === gheDangDat.SoGhe
+    );
+    if (index != -1) {
+      this.mangGheDangChon.splice(index, 1);
+    } else {
+      this.mangGheDangChon.push(gheDangDat);
+    }
+
+    // Sắp xếp ghế lại
+    // this.mangGheDangChon = this.mangGheDangChon.sort(
+    //   (gheTiepTheo: Ghe, ghe: Ghe) => {
+    //     return gheTiepTheo.SoGhe - ghe.SoGhe;
+    //   }
+    // );
+
+    this.mangGheDangChon = _.sortBy(this.mangGheDangChon, ["SoGhe"]);
+  }
+  @ViewChildren(GheComponent) dsAppGhe!: QueryList<GheComponent>;
+  huyGhe(gheHuy: Ghe) {
+    this.mangGheDangChon = this.mangGheDangChon.filter(
+      (gheDD) => gheDD.SoGhe !== gheHuy.SoGhe
+    );
+    // xử lý dom đến app-ghe tìm ra ghế hủy
+    this.dsAppGhe.forEach((gheCon: GheComponent, index: number) => {
+      if (gheCon.ghe.SoGhe === gheHuy.SoGhe) {
+        gheCon.dangDat = false;
+      }
+    });
+    // Tìm ra <app-gh> bấm hủy trên nhiều thẻ <app-ghe> thông qua thuộc tính @InputGhe của mỗi thẻ <app-ghe>
+    // let GheComponentHuy: GheComponent | undefined = this.dsAppGhe.find(
+    //   (gheCom: GheComponent) => gheCom.ghe.SoGhe === gheHuy.SoGhe
+    // );
+    // if (GheComponentHuy) {
+    //   GheComponentHuy.dangDat = false;
+    // }
+  }
+  // Dom Đến tất cả các thẻ <app-ghe></app-ghe> tìm ra thẻ <app-ghe> nào bấm huỷ
+
   constructor() {}
 
   ngOnInit() {}
+}
+
+interface Ghe {
+  SoGhe: number;
+  TenGhe: string;
+  Gia: number;
+  TrangThai: boolean;
 }
