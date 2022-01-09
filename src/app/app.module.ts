@@ -10,6 +10,22 @@ import { BaiTap1Module } from "./TrainingAngulars/BaiTap1/bai-tap1.module";
 import { DataBindingModule } from "./TrainingAngulars/DataBinding/data-binding.module";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { DemoUIModule } from "./DemoUIModule/DemoUIModule.module";
+//Định nghĩa router
+import { RouterModule, Routes } from "@angular/router";
+
+import { Page404Component } from "./pages/Page404/Page404.component";
+import { HeaderHomeComponent } from "./components/HeaderHome/HeaderHome.component";
+import { HomeModule } from "./pages/HomeModule/Home.module";
+import { UserModule } from "./pages/UserModule/User.module";
+import { HttpClientModule } from "@angular/common/http";
+
+const appRoutes: Routes = [
+  { path: "home", loadChildren: () => HomeModule }, // /home => load ra trang home
+  { path: "user", loadChildren: () => UserModule },
+  { path: "", loadChildren: () => HomeModule },
+  { path: "page404", component: Page404Component },
+  { path: "**", redirectTo: "page404" },
+];
 
 @NgModule({
   declarations: [
@@ -26,6 +42,8 @@ import { DemoUIModule } from "./DemoUIModule/DemoUIModule.module";
     PropsModule,
     NoopAnimationsModule,
     DemoUIModule,
+    RouterModule.forRoot(appRoutes),
+    HttpClientModule,
   ],
   providers: [], // Chức những class service
   bootstrap: [AppComponent], // chứa các component được chạy trên file index.html
