@@ -17,7 +17,8 @@ import { Page404Component } from "./pages/Page404/Page404.component";
 import { HeaderHomeComponent } from "./components/HeaderHome/HeaderHome.component";
 import { HomeModule } from "./pages/HomeModule/Home.module";
 import { UserModule } from "./pages/UserModule/User.module";
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
+import { AuthorInterceptor } from "./__core/guards/Auth.interceptor";
 
 const appRoutes: Routes = [
   { path: "home", loadChildren: () => HomeModule }, // /home => load ra trang home
@@ -45,7 +46,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     HttpClientModule,
   ],
-  providers: [], // Chức những class service
+  providers: [{provide:HTTP_INTERCEPTORS, useClass:AuthorInterceptor, multi:true}], // Chức những class service
   bootstrap: [AppComponent], // chứa các component được chạy trên file index.html
 })
 export class AppModule {}

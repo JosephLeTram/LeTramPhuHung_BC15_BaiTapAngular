@@ -4,7 +4,7 @@ import { Component, OnInit } from "@angular/core";
   selector: "app-user-template",
   template: `<div class="row">
     <div class="col-6 m-0 p-0">
-      <img src="https://i.pravatar.cc/200/200" />
+      <img class="w-100" src="https://i.pravatar.cc/200/200" />
     </div>
     <div class="col-6 m-0 p-0">
       <router-outlet></router-outlet>

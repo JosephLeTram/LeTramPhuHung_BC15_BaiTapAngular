@@ -24,10 +24,10 @@ import { Component, OnInit } from "@angular/core";
           <a class="nav-link" routerLink="/contact">Contact</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" [routerLink]="['/login']">Login</a>
+          <a class="nav-link" [routerLink]="['/user/login']">Login</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" [routerLink]="['/register']">Register</a>
+          <a class="nav-link" [routerLink]="['/user/register']">Register</a>
         </li>
         <li class="nav-item dropdown">
           <a
